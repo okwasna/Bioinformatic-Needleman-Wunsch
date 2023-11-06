@@ -19,8 +19,24 @@ Skrypt przetworzy sekwencje i zapisze wynik wyrównania do pliku tekstowego.
 
 Funkcje
 
-needleman_wunsch(seq1, seq2, match_score, mismatch_penalty, gap_penalty)
-Wykonuje algorytm wyrównania Needleman-Wunsch na dwóch sekwencjach (seq1 i seq2). Parametry match_score, mismatch_penalty i gap_penalty pozwalają dostosować punktację za zgodności, niezgodności i przerwy odpowiednio.
+Algorytm Needleman-Wunsch jest metodą używaną do globalnego wyrównywania sekwencji, co oznacza, że znajduje optymalne dopasowanie całych sekwencji od początku do końca. 
+
+Funkcja needleman_wunsch implementuje algorytm Needleman-Wunsch i przyjmuje dwa łańcuchy znaków (seq1, seq2) reprezentujące sekwencje do wyrównania oraz trzy wartości numeryczne: match_score, mismatch_penalty, i gap_penalty reprezentujące odpowiednio: punktację za zgodność, karę za niezgodność i karę za przerwę (gap).
+
+Oto szczegółowy opis działania tej funkcji:
+
+Inicjalizacja macierzy skorowania (score_matrix): Tworzy macierz o wymiarach (m+1) x (n+1), gdzie m to długość seq1, a n to długość seq2. Każda komórka w macierzy odpowiada skumulowanej punktacji za dopasowanie lub wprowadzenie przerw do danego momentu w sekwencjach.
+Inicjalizacja macierzy wskazań kierunków (traceback_matrix): Tworzy drugą macierz, która jest używana do zapisywania, skąd przyszła dana punktacja w score_matrix. Dzięki niej będziemy w stanie odtworzyć optymalne dopasowanie po zakończeniu wypełniania score_matrix.
+Wypełnienie pierwszego wiersza i kolumny: Ustawia punktację w pierwszym wierszu i kolumnie zgodnie z karami za przerwę, zakładając, że każda przerwa w jednej z sekwencji ma stałą karę.
+
+Wypełnianie macierzy skorowania i traceback: Dla każdej komórki w macierzy oblicza maksymalną punktację z możliwych ruchów:
+diag - punktacja za zgodność (lub niezgodność) znaków w obu sekwencjach,
+up - punktacja za wprowadzenie przerwy w pierwszej sekwencji,
+left - punktacja za wprowadzenie przerwy w drugiej sekwencji.
+
+Ruch, który daje najwyższą punktację, jest zapisywany w traceback_matrix.
+
+Śledzenie wsteczne: Rozpoczynając od dolnego prawego rogu traceback_matrix, funkcja odtwarza optymalne dopasowanie. Jeśli ruch przyszedł na przekątnej, to znaki są dopasowane do siebie. Jeśli przyszedł z góry, to w pierwszej sekwencji wprowadzana jest przerwa. Jeśli przyszedł z lewej, to przerwa wprowadzana jest w drugiej sekwencji. Ten proces jest kontynuowany aż do osiągnięcia górnego lewego rogu macierzy.
 
 read_fasta(file_path)
 Odczytuje plik FASTA z podanej file_path i zwraca listę sekwencji.
