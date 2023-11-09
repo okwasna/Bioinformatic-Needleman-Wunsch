@@ -1,5 +1,5 @@
 # Bioinformatic-Needleman-Wunsch
-Narzędzie do Wyrównywania Sekwencji
+Narzędzie do dopasowania globalnego sekwencji
 
 To narzędzie jest zaprojektowane do wyrównywania dwóch sekwencji biologicznych przy użyciu algorytmu Needleman-Wunsch. Zaimplementowano je w Pythonie i jest przeznaczone do uruchamiania w środowisku Jupyter. Skrypt odczytuje dane sekwencji z pliku FASTA, wyrównuje sekwencje i eksportuje wynik do pliku tekstowego.
 
